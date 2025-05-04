@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        *{
+          margin: 0;
+         padding: 0;
+          box-sizing: border-box;
+        }
+
+        .correct {
+          background: #9aeabc !important;
+        }
+
+        .incorrect {
+           background: #ff9393 !important;
+        }
+
+
+
+    </style>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+</head>
+<body class="bg-[#001e4d]">
+    <div class="app bg-white w-[90%] max-w-[600px] m-[100px_auto_0] rounded-[10px] p-[30px]">
+        <h1 class="text-[25px] text-[#001e4d] font-bold border-b border-solid border-[#000] pb-[30px]">Simple Quiz</h1>
+        <div class="quiz p-[20px_0] ">
+            <h2 id="question" class="text-[18px] text-[#001e4d] font-bold">What is the output of 5!</h2>
+            <div id="answer-button">
+                <button class="btn bg-[#fff] font-semibold w-full border-[1px] border-solid border-[#2222] p-[10px] my-[10px] text-left rounded-[4px] cursor-pointer transition-all duration-300 hover:bg-[#222] hover:text-[#fff]">100</button>
+                <button class="btn bg-[#fff] font-semibold w-full border-[1px] border-solid border-[#2222] p-[10px] my-[10px] text-left rounded-[4px] cursor-pointer transition-all duration-300 hover:bg-[#222] hover:text-[#fff]">110</button>
+                <button class="btn bg-[#fff] font-semibold w-full border-[1px] border-solid border-[#2222] p-[10px] my-[10px] text-left rounded-[4px] cursor-pointer transition-all duration-300 hover:bg-[#222] hover:text-[#fff]">120</button>
+                <button class="btn bg-[#fff] font-semibold w-full border-[1px] border-solid border-[#2222] p-[10px] my-[10px] text-left rounded-[4px] cursor-pointer transition-all duration-300 hover:bg-[#222] hover:text-[#fff]">130</button>
+
+            </div>
+            <button id="next-btn" class="bg-[#001e4d] text-[#fff] font-[500] w-[150px] p-[10px] m-[20px_auto_0] rounded-[4px] cursor-pointer hidden"></button>
+        </div>
+
+    </div>
+
+
+    <script>
+        const questions = [
+    {
+        question: "30÷5=6, then the quotient is:" ,
+
+        answers: [
+            {text: 0, correct: false},
+            {text: 5, correct: false},
+            {text: 6, correct: true},
+            {text: 30, correct: false}
+        ]
+    },
+    {
+        question: "A Super set of {flower} is ",
+        answers: [
+            {text: "Plant", correct: true},
+            {text: "Vegetable", correct: false},
+            {text: "Animal", correct: false},
+            {text: "Sweets", correct: false}
+        ]
+    },
+    {
+        question: "The H.C.F of 10, 15, 20 is" ,
+        answers: [
+            {text: 60, correct: true},
+            {text: 45, correct: false},
+            {text: 100, correct: false},
+            {text: 10, correct: false}
+        ]
+    },
+    {
+        question: " On simplifying (1/2)^4 * 6^2 * (3/2)^(-3) we get",
+        answers: [
+            {text: 2/3, correct: true},
+            {text: 3/2, correct: false},
+            {text: 1/3, correct: false},
+            {text: 3, correct: false}
+        ]
+    },
+    {
+        question: "The division is completed when the reminder is:",
+        answers: [
+            {text: 1, correct: false},
+            {text: 0, correct: true},
+            {text: 2, correct: false},
+            {text: 3, correct: false}
+        ]
+    },
+    {
+        question: "Ahmad bought a TV for Rs. 4000 and sold it for Rs. 5000. Find its profit percentage",
+        answers: [
+            {text: 25, correct: true},
+            {text: 35, correct: false},
+            {text: 75, correct: false},
+            {text: 60, correct: false},
+
+        ]
+    },
+    {
+        question: "A number is exectly divisible by 2 if its unit digit is ...........",
+        answers: [
+            {text: "Even", correct: true},
+            {text: "Odd", correct: false},
+            {text: "Prime", correct: false},
+            {text: "Composite", correct: false}
+        ]
+
+    },
+    {
+        question : "a^m + a^n" , 
+        answers: [
+            {text: "a^(m-n)", correct: false},
+            {text: "a^(m+n)", correct: true},
+            {text: "a^m + a^n", correct: false},
+            {text: "a^m - a^n", correct: false}
+                
+        ]
+    },
+    {
+        question: "If 1 is added to greatest 4 digit number than, than it will be",
+        answers: [
+            {text: "1 thousand", correct: false},
+            {text: "10 thousand", correct: true},
+            {text: "1 lac", correct: false},
+            {text: "10 lac", correct: false},
+
+        ]
+    },
+    {
+        question: "Decimal fraction of 160% is",
+        answers: [
+            {text: 16, correct: false},
+            {text: 1.6, correct: false},
+            {text:"100/160", correct: false},
+            {text: "160/100", correct: true}
+
+        ] 
+
+    },
+    {
+        question: "2(4 - 3)",
+        answers: [
+            {text: 2, correct: true},
+            {text: 4, correct: false},
+            {text: 6, correct: false},
+            {text: 8, correct: false}
+        ]
+    },
+    {
+        question: "x < y means",
+        answers: [
+            {text: "x is greater than y", correct: false},
+            {text: "x is less than y", correct: true},
+            {text: "x is equal to y", correct: false},
+            {text: "none of all", correct: false}
+        ]
+    },
+    {
+        question: "2(7x - 3) + 5(6 - 2x)",
+        answers: [
+            {text: "4x + 36", correct: false},
+            {text: " 5x + 24", correct: false},
+            {text: "4x + 24", correct: true},
+            {text: "14x + 24", correct: false}
+        ]
+    },
+    {
+        question: "Age of a father is thrice the age of his son. If father is 26 year older than his son, the age of father is:",
+        answers: [
+            {text: 29, correct: false},
+            {text: 24, correct: false},
+            {text: 39, correct: true},
+            {text: 33, correct: false}
+        ]
+    },
+    {
+        question: "If a=2, b = -3, c=4 than find a*a + ab + c*c",
+        answers: [
+            {text: 12, correct: false},
+            {text: 13, correct: false},
+            {text: 14, correct: true},
+            {text: 15, correct: false}
+        ]
+    },
+    {
+        question: "Which of the fallowing is an Open Sentence ?",
+        answers: [
+            {text: "4 + 5 = 9", correct: false},
+            {text: "13 + 6 = 19", correct: false},
+            {text: "14 - 9 = 8", correct: false},
+            {text: "x + 9 = 50", correct: true}
+        ]
+    },
+    {
+        question: "Thw value of 3x-6 When x=2 is",
+        answers: [
+            {text: 12, correct: false},
+            {text: 6, correct: false},
+            {text: 0, correct: true},
+            {text: 1, correct: false}
+        ]
+    },
+    {
+        question: "in the expression x^2 + 3x - 4 the constant term is",
+        answers: [
+            {text: 1, correct: false},
+            {text: 3, correct: false},
+            {text: -4, correct: true},
+            {text: "x", correct: false}
+        ]
+    },
+    {
+        question: "Sum of x+7y-3 and 6x-2y+5 is",
+        answers: [
+            {text: "7x + 9y + 8", correct: false},
+            {text: "7x + 2y + 5", correct: false},
+            {text: "7x + 2y + 4 ", correct: false},
+            {text: "7x + 5y + 2", correct: true}
+        ]
+    },
+    {
+        question: "Which one of the following statement is true?",
+        answers: [
+            {text: "8 + 9 = 18", correct: false},
+            {text: "13 = 6 + 8", correct: false},
+            {text: "13 + 12 = 25", correct: true},
+            {text: "All of the Above", correct: false}
+        ]
+    },
+    {
+        question: "The number of brackets to simplify the algebraic expression are: ",
+        answers: [
+            {text: "two", correct: false},
+            {text: "three", correct: true},
+            {text: "four", correct: false},
+            {text: "five", correct: false}
+        ]
+    },
+    {
+        question: "The number appearing before the variable is called:",
+        answers: [
+            {text: "Term", correct: false},
+            {text: "Constant", correct: false},
+            {text: "Index", correct: false},
+            {text: "Coefficients", correct: true}
+        ]
+    },
+    {
+        question: "The product of 2x^2 and 3x^3 is:",
+        answers: [
+            {text: "5x^6", correct: false},
+            {text: "6x^6", correct: true},
+            {text: "5x", correct: false},
+            {text: "6x", correct: false}
+        ]
+    } 
+];
+
+
+const questionElement = document.getElementById("question");
+const answerButton = document.getElementById("answer-button");
+const nextButton = document.getElementById("next-btn");
+
+let currentQuestionIndex = 0;
+let score = 0;
+
+function startQuiz() {
+    currentQuestionIndex = 0;
+    score = 0;
+    nextButton.innerHTML = "Next";
+    showQuestion();
+}
+
+function showQuestion() {
+    resetState();
+    let currentQuestion = questions[currentQuestionIndex];
+    let questionNo = currentQuestionIndex + 1;
+    questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
+
+    currentQuestion.answers.forEach(answer => {
+        const button = document.createElement("button");
+        button.innerHTML = answer.text;
+        button.classList.add("btn");
+        button.classList.add("bg-[#fff]", "font-semibold", "w-full", "border-[1px]", "border-solid", "border-[#2222]", "p-[10px]", "my-[10px]", "text-left", "rounded-[4px]", "cursor-pointer", "transition-all", "duration-300", "hover:bg-[#222]", "hover:text-[#fff]");
+        answerButton.appendChild(button);
+        
+        if (answer.correct) {
+            button.dataset.correct = answer.correct;
+        }
+
+        button.addEventListener("click", selectAnswer);
+    });
+}
+
+function resetState() {
+    nextButton.style.display = "none";
+    while (answerButton.firstChild) {
+        answerButton.removeChild(answerButton.firstChild);
+    }
+}
+
+function selectAnswer(e) {
+    const selectedBtn = e.target;
+    const isCorrect = selectedBtn.dataset.correct == "true";
+
+    if (isCorrect) {
+        selectedBtn.classList.add("correct");
+        score++; // Increase score if correct
+    } else {
+        selectedBtn.classList.add("incorrect");
+
+        // Highlight the correct answer
+        Array.from(answerButton.children).forEach(button => {
+            if (button.dataset.correct == "true") {
+                button.classList.add("correct");
+            }
+        });
+    }
+
+    // Disable all buttons after selection
+    Array.from(answerButton.children).forEach(button => {
+        button.disabled = true;
+    });
+
+    nextButton.style.display = "block"; // Show next button after selecting an answer
+}
+
+
+nextButton.addEventListener("click", () => {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions.length) {
+        showQuestion();
+    } else {
+        showScore(); // Show final score when quiz is over
+    }
+});
+
+function showScore() {
+    resetState();
+    questionElement.innerHTML = `You marks are ${score} out of ${questions.length}. `;
+    nextButton.innerHTML = "Restart";
+    nextButton.style.display = "block";
+
+    nextButton.addEventListener("click", startQuiz);
+}
+
+startQuiz();
+
+    </script>
+    
+</body>
+</html>
